@@ -1,9 +1,15 @@
 // require the express module in order to access the dependency
 const express = require("express");
+// requre the morgan middleware in order to access and use it
+const morgan = require("morgan");
+
 /* The express module exports a top-level function. 
 That function creates a new application object that encapsulates the functionality of your Express server. 
 Invoke the function to create the application. */
 const app = express();
+
+// middleware has to be mounted or add before it can be used by epxress. Express comes with the build in .use() method to do this
+app.use(morgan("dev"));
 
 // a simple GET request using Express
 app.get("/", (req, res) => {
