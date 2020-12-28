@@ -43,8 +43,30 @@ app.get("/echo", (req, res) => {
 
 app.get("/queryViewer", (req, res) => {
   // console log the query property of the request object which contains the key/value pairs of the query string
-  console.log("req.query");
+  console.log(req.query);
+  // quickly end the response without any data; don't send any data back to the client
   res.end();
+});
+
+app.get("/greetings", (req, res) => {
+  // 1. use object destructuring to access the keys of the req.query object
+  const { name, race } = req.query;
+
+  //2. validate the values
+  if (!name) {
+    //3. name was not provided
+    return res.status(400).send("Please provide a name");
+  }
+
+  if (!race) {
+    //3. race was not provided
+    return res.status(400).send("Please provide a race");
+  }
+  //4. and 5. both name and race are valid so do the processing.
+  const greeting = `Greetings ${name} the ${race}, welcome to our kingdom.`;
+
+  //6. send the response
+  res.send(greeting);
 });
 
 app.listen(8000, () => {
