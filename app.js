@@ -41,6 +41,12 @@ app.get("/echo", (req, res) => {
   res.send(responseText);
 });
 
+app.get("/queryViewer", (req, res) => {
+  // console log the query property of the request object which contains the key/value pairs of the query string
+  console.log("req.query");
+  res.end();
+});
+
 app.listen(8000, () => {
   console.log("express server is listening on port 8000");
 });
