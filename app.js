@@ -85,9 +85,11 @@ app.get("/sum", (req, res) => {
   }
 
   // a and b must be converted to numbers because they are currently strings
+  const numberA = parseInt(a);
+  const numberB = parseInt(b);
 
   // create a variable for the sum
-  const c = a + b;
+  const c = numberA + numberB;
 
   console.log(req.query);
 
