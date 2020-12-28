@@ -29,6 +29,18 @@ app.get("/pizza/pineapple", (req, res) => {
   res.send("we dont serve that here. never call again!");
 });
 
+app.get("/echo", (req, res) => {
+  const responseText = `Here are some details of your request:
+    App: ${req.app}
+    Body: ${req.body}
+    IP: ${req.ip}
+    Params: ${req.params}
+    Base URL: ${req.baseUrl}
+    Host: ${req.hostname}
+    Path: ${req.path}`;
+  res.send(responseText);
+});
+
 app.listen(8000, () => {
   console.log("express server is listening on port 8000");
 });
