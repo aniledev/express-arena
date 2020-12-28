@@ -69,6 +69,35 @@ app.get("/greetings", (req, res) => {
   res.send(greeting);
 });
 
-app.listen(8000, () => {
+// create a route handler function on the path /sum
+app.get("/sum", (req, res) => {
+  // 1. use object destructuring to access the keys of the req.query object
+  const { a, b } = req.query;
+
+  //2. validate the values
+  if (!a) {
+    // is a was not provided
+    return res.status(400).send("A is required");
+  }
+  if (!b) {
+    // if b was not provided
+    return res.status(400).send("B is required");
+  }
+
+  // a and b must be converted to numbers because they are currently strings
+
+  // create a variable for the sum
+  const c = a + b;
+
+  console.log(req.query);
+
+  // both a and b are valid so do processing
+  const sum = `The sum of ${a} and ${b} is ${c}`;
+
+  //send the response
+  res.send(sum);
+});
+
+app.listen(8080, () => {
   console.log("express server is listening on port 8000");
 });
