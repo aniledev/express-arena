@@ -88,13 +88,22 @@ app.get("/sum", (req, res) => {
   const numberA = parseInt(a);
   const numberB = parseInt(b);
 
-  // create a variable for the sum
-  const c = numberA + numberB;
+  //validate numberA and numberB in case a number is not the result
+
+  if (Number.isNaN(numberA)) {
+    return res.status(400).send("A must be a number");
+  }
+
+  if (Number.isNaN(numberB)) {
+    return res.status(400).send("B must be a number");
+  }
 
   console.log(req.query);
 
+  // create a variable for the sum
+  const c = numberA + numberB;
   // both a and b are valid so do processing
-  const sum = `The sum of ${a} and ${b} is ${c}`;
+  const sum = `The sum of ${numberA} and ${numberB} is ${c}`;
 
   //send the response
   res.send(sum);
