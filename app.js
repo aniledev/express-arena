@@ -165,7 +165,27 @@ app.get("/cipher", (req, res) => {
   res.status(200).send(cipher);
 });
 
-app.get("/lotto", (req, res) => {});
+app.get("/lotto", (req, res) => {
+  // accss the req.query object
+  const { numbers } = req.query;
+
+  // the numbers array is required
+  if (!numbers) {
+    return res
+      .status(400)
+      .send(
+        "numbers array is required, a parameter has to be passed in at a minimum"
+      );
+  }
+
+  // numbers must be an array and not another data type
+  if (!Array.isArray(numbers)) {
+    return res.status(400).send("numbers must be an array");
+  }
+
+  // the array has to be 6 numbers
+    if ()
+});
 
 app.listen(8080, () => {
   console.log("express server is listening on port 8080");
