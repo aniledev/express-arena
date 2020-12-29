@@ -109,6 +109,62 @@ app.get("/sum", (req, res) => {
   res.send(sum);
 });
 
+app.get("/cipher", (req, res) => {
+  // use object desctructuing to access the query parameters
+  const { text, shift } = req.query;
+
+  // validate the parameters: both are required
+  if (!text) {
+    return res.status(400).send("text is required");
+  }
+  if (!shift) {
+    return res.status(400).send("shift is required");
+  }
+
+  // shift must be a number, use parse to convert
+  const numberShift = parseInt(shift);
+
+  // validate that numberShift is in fact a number after the parse
+  if (Number.isNaN(numberShift)) {
+    return res.status(404).send("shift must be a number");
+  }
+
+  // assigns the UTF code of A to the variable base
+  const base = "A".charCodeAt(0);
+
+  // map over each character in the string
+
+  const cipher = text
+    .toUpperCase()
+    .split("") // create an array of characters
+    .map((char) => {
+      // map each original char to a converted char
+      const code = char.charCodeAt(0); //get the char code, this returns the UTF code of that character
+
+      // if it is not one of the 26 letters ignore it
+      // UTF code of A === 65, UTF code of z === 65+26
+      if (code < base || code > base + 26) {
+        return char;
+      }
+
+      // otherwise convert it
+      // get the distance from A
+      let diff = code - base;
+      diff = diff + numberShift;
+
+      // in case shift takes the value past Z, cycle back to the beginning
+      diff = diff % 26;
+
+      // convert back to a character
+      const shiftedChar = String.fromCharCode(base + diff);
+      return shiftedChar;
+    })
+    .join(""); // construct a String from the array
+
+  // Return the response
+  res.status(200).send(cipher);
+});
+
 app.listen(8080, () => {
-  console.log("express server is listening on port 8000");
+  console.log("express server is listening on port 8080");
 });
