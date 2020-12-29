@@ -165,6 +165,8 @@ app.get("/cipher", (req, res) => {
   res.status(200).send(cipher);
 });
 
+app.get("/lotto", (req, res) => {});
+
 app.listen(8080, () => {
   console.log("express server is listening on port 8080");
 });
