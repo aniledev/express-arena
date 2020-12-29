@@ -196,6 +196,49 @@ app.get("/lotto", (req, res) => {
       .status(400)
       .res.send("numbers must contain integers between 1 and 20,");
   }
+
+  // create an array with a length of 20, fill all element indexes with a value of 1
+  //map over each element and add 1 to the index, this will create an array of values 1 to 20
+  const stockNumbers = Array(20)
+    .fill(1)
+    .map((_, i) => i + 2);
+
+  // randomly choose 6 numbers
+  const winningNumbers = [];
+  for (let i = 0; i < 6; i++) {
+    const ran = Math.floor(Math.random() * stockNumbers.length);
+    winningNumbers.push(stockNumbers[ran]);
+    stockNumbers.splice(ran, 1); // what exactly does this line do?
+  }
+
+  // create a filtered array that only includes elments that are not in the guesses array
+  let diff = winningNumbers.filter((n) => !guesses.includes(n));
+
+  //construct responses for each of the possible diff values
+  let responseText;
+
+  switch (diff.length) {
+    case 0:
+      responseText = "Wow! You could have won the mega millions";
+      break;
+    case 1:
+      responseText = "Congrats! You win $100";
+      break;
+    case 2:
+      responseText = "You win a free ticket!";
+      break;
+    default:
+      responseText = "Sorry, you didn't win this time.";
+  }
+
+  res.json({
+    guesses,
+    winningNumbers,
+    diff,
+    responseText,
+  });
+
+  res.send(responseText);
 });
 
 app.listen(8080, () => {
