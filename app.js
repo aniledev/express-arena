@@ -183,8 +183,19 @@ app.get("/lotto", (req, res) => {
     return res.status(400).send("numbers must be an array");
   }
 
-  // the array has to be 6 numbers
-    if ()
+  //map over the array and parse each element into a number
+  // create a new array where NaN are filtered out and numbers not between 1 and 20 are filtered out
+  // if an element meets these conditions they would be taken out of the array, reducing the arrays length
+  const guesses = numbers
+    .map((n) => parseInt(n))
+    .filter((n) => !Number.isNaN(n) && n >= 1 && n <= 20);
+
+  // guesses array must still be 6 values in length
+  if (guesses.length != 6) {
+    return res
+      .status(400)
+      .res.send("numbers must contain integers between 1 and 20,");
+  }
 });
 
 app.listen(8080, () => {
